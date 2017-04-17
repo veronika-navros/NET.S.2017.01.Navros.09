@@ -1,15 +1,11 @@
-﻿    using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System;
 
 namespace Task1
 {
     /// <summary>
     /// REpresents class which contains information about a book
     /// </summary>
-    public class Book
+    public class Book : IEquatable<Book>, IComparable, IComparable<Book>
     {
         #region Properties
 
@@ -39,7 +35,8 @@ namespace Task1
         public Book(string name, string author, int edition,
             string genre, string publisher)
         {
-            if(name == null || author == null || genre == null || publisher == null)
+            if(ReferenceEquals(name, null) || ReferenceEquals(author, null) || 
+                ReferenceEquals(genre, null) || ReferenceEquals(publisher, null))
                 throw new ArgumentNullException();
 
             Name = name;
@@ -73,10 +70,10 @@ namespace Task1
         /// <returns>true if the specified book is equal to the current book; otherwise, false.</returns>
         public bool Equals(Book book)
         {
-            if (book == null)
+            if (ReferenceEquals(book, null))
                 return false;
 
-            if (book == this)
+            if (ReferenceEquals(book, this))
                 return true;
 
             return Name.Equals(book.Name) && Author.Equals(book.Author) && Edition == book.Edition
@@ -90,10 +87,10 @@ namespace Task1
         /// <returns>true if the specified object is equal to the current book; otherwise, false.</returns>
         public override bool Equals(object o)
         {
-            if (o == null)
+            if (ReferenceEquals(o, null))
                 return false;
 
-            if (o.GetType() != this.GetType())
+            if (o.GetType() != GetType())
                 return false;
 
             return Equals((Book)o);
@@ -114,6 +111,25 @@ namespace Task1
         /// <returns> A string that represents the current object</returns>
         public override string ToString() => Name + " " + Author + " Edition: " + Edition
             + " " + Genre + " Publisher: " + Publisher;
+
+        public int CompareTo(object o)
+        {
+            if (ReferenceEquals(o, null))
+                return 1;
+
+            if (!ReferenceEquals(o as Book, null))
+                return CompareTo(o as Book);
+
+            return 0;
+        }
+
+        public int CompareTo(Book book)
+        {
+            if (ReferenceEquals(book, null))
+                return 1;
+
+            return string.Compare(Name, book.Name, StringComparison.Ordinal);
+        }
 
         #endregion
     }
