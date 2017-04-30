@@ -5,6 +5,7 @@ namespace Task1
     /// <summary>
     /// REpresents class which contains information about a book
     /// </summary>
+    [Serializable]
     public class Book : IEquatable<Book>, IComparable, IComparable<Book>
     {
         #region Properties
