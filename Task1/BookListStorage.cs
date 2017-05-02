@@ -8,6 +8,9 @@ using System.Threading.Tasks;
 
 namespace Task1
 {
+    /// <summary>
+    /// Stores book list
+    /// </summary>
     public class BookListStorage : IStorage
     {
         private readonly string _fileName;
